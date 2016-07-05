@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "634756692255",
+    "firebase_url": "https://fleetmatics-innovation-project.firebaseio.com",
+    "project_id": "fleetmatics-innovation-project",
+    "storage_bucket": "fleetmatics-innovation-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:634756692255:android:17586d1609010238",
+        "android_client_info": {
+          "package_name": "dragora.net.innovationcontest2016"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "634756692255-t3bu4fknf5lvie17rhvrilvhrlslg7f1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dragora.net.innovationcontest2016",
+            "certificate_hash": "03CE39DFE3BD165C47DF566537839460DB55283F"
+          }
+        },
+        {
+          "client_id": "634756692255-ggf3grvpad9agijce6ua50riv2rp9cdf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCR3U6_HmrUpsyl6Ir9JBTZod2ZmrJb4gM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "634756692255-ggf3grvpad9agijce6ua50riv2rp9cdf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "634756692255-gm01mf5lcj0kfmhe3754t0ena4tilllt.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "it.figa.Contest-2016"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
