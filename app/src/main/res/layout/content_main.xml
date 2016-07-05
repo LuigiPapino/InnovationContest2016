@@ -53,6 +53,19 @@
       android:text="Pick Color"
       />
 
+  <Button
+      android:id="@+id/photoButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/colorButton"
+      android:layout_centerHorizontal="true"
+      android:layout_marginTop="32dp"
+      android:onClick="onPhotoClick"
+      android:paddingLeft="32dp"
+      android:paddingRight="32dp"
+      android:text="Choose Photo"
+      />
+
   <android.support.design.widget.FloatingActionButton
       android:id="@+id/fabJumpLeft"
       android:layout_width="wrap_content"

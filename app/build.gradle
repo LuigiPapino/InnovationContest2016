@@ -1,4 +1,15 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+
+  dependencies {
+    classpath 'com.canelmas.let:let-plugin:0.1.11'
+  }
+}
+
 apply plugin: 'com.android.application'
+apply plugin: 'let'
 
 android {
   compileSdkVersion 24
@@ -22,6 +33,10 @@ repositories {
   maven {
     url "http://github.com/wada811/Android-Material-Design-Colors/raw/master/repository/"
   }
+  maven { url "https://jitpack.io" }
+  jcenter()
+
+
 }
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -37,6 +52,13 @@ dependencies {
   compile 'com.wada811:android-material-design-colors:3.0.0'
   compile 'com.google.firebase:firebase-storage:9.2.0'
   compile 'com.google.firebase:firebase-auth:9.2.0'
+  compile 'com.github.bumptech.glide:glide:3.7.0'
+  compile 'jp.wasabeef:glide-transformations:2.0.1'
+
+
+
+  compile 'com.github.jkwiecien:EasyImage:1.2.3'
+
   testCompile 'junit:junit:4.12'
 }
 
