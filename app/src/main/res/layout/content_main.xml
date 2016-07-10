@@ -1,91 +1,239 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="dragora.net.innovationcontest2016.MainActivity"
-    tools:showIn="@layout/activity_main"
-    >
+    tools:showIn="@layout/activity_main">
 
-  <RadioGroup
-      android:id="@+id/radioGroup"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_centerHorizontal="true"
-      android:layout_marginLeft="16dp"
-      android:layout_marginTop="72dp"
-      android:orientation="horizontal"
-      >
+    <RelativeLayout
+        android:id="@+id/colorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:background="@color/md_green_500"
+        android:visibility="visible">
 
-    <RadioButton
-        android:id="@+id/circle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="16dp"
-        android:onClick="onShapeClick"
-        android:text="Circle"
+        <ImageButton
+            android:id="@+id/colorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:backgroundTint="@color/md_orange_500"
+            android:elevation="6dp"
+            android:onClick="onColorClick"
+            android:padding="32dp"
+            android:src="@drawable/ic_color_lens_white_48dp" />
 
-        />
-    <RadioButton
-        android:id="@+id/square"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:onClick="onShapeClick"
-        android:text="Square"
+        <TextView
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/colorButton"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="Choose a Color"
+            android:textColor="@color/md_white" />
+    </RelativeLayout>
 
-        />
-  </RadioGroup>
 
-  <Button
-      android:id="@+id/colorButton"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/radioGroup"
-      android:layout_centerHorizontal="true"
-      android:layout_marginTop="32dp"
-      android:onClick="onColorClick"
-      android:paddingLeft="32dp"
-      android:paddingRight="32dp"
-      android:text="Pick Color"
-      />
+    <RelativeLayout
+        android:id="@+id/photoLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:background="@color/md_orange_500"
+        android:visibility="invisible">
 
-  <Button
-      android:id="@+id/photoButton"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/colorButton"
-      android:layout_centerHorizontal="true"
-      android:layout_marginTop="32dp"
-      android:onClick="onPhotoClick"
-      android:paddingLeft="32dp"
-      android:paddingRight="32dp"
-      android:text="Choose Photo"
-      />
+        <ImageButton
+            android:id="@+id/photoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:backgroundTint="@color/md_green_500"
+            android:elevation="6dp"
 
-  <android.support.design.widget.FloatingActionButton
-      android:id="@+id/fabJumpLeft"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentBottom="true"
-      android:layout_alignParentLeft="true"
-      android:layout_margin="@dimen/fab_margin"
-      app:backgroundTint="@color/colorPrimary"
-      app:srcCompat="@drawable/ic_file_upload_white_36dp"
-      />
+            android:onClick="onPhotoClick"
+            android:padding="32dp"
+            android:src="@drawable/ic_photo_camera_white_48dp"
 
-  <android.support.design.widget.FloatingActionButton
-      android:id="@+id/fabJumpRight"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentBottom="true"
-      android:layout_alignParentRight="true"
-      android:layout_margin="@dimen/fab_margin"
+            />
 
-      app:backgroundTint="@color/colorPrimary"
-      app:srcCompat="@drawable/ic_file_upload_white_36dp"
-      />
+        <TextView
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/photoButton"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="Choose a photo"
+            android:textColor="@color/md_white" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/shapeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:background="@color/md_deep_purple_500"
+        android:visibility="invisible">
+
+
+        <EditText
+            android:id="@+id/nameInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginTop="72dp"
+            android:hint="Name"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textColorHint="@color/md_grey_400" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/nameInput"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="32dp"
+            android:orientation="horizontal"
+            android:visibility="invisible">
+
+            <RadioButton
+                android:id="@+id/circle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:checked="true"
+                android:onClick="onShapeClick"
+                android:text="Circle"
+                android:textColor="@color/white"
+                app:buttonTint="@color/white"
+
+                />
+
+            <RadioButton
+                android:id="@+id/square"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:onClick="onShapeClick"
+                android:text="Square"
+                android:textColor="@color/white"
+                app:buttonTint="@color/white"
+
+                />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/joinGuestbook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/radioGroup"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="@color/colorAccent"
+            android:onClick="onJoinClick"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
+            android:text="Join GuestBook"
+            android:textColor="@color/md_white"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/photoPreview"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_below="@id/joinGuestbook"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:background="@color/white"
+        android:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/photoPreviewMain"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="16dp" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabJumpLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/photoPreviewMain"
+
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_toLeftOf="@id/photoPreviewMain"
+            android:rotation="-15"
+            android:tint="@color/white"
+
+            app:backgroundTint="@color/colorPrimary"
+            app:srcCompat="@drawable/human_handsup" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabJumpRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/photoPreviewMain"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_toRightOf="@id/photoPreviewMain"
+            android:rotation="15"
+            android:tint="@color/white"
+
+            app:backgroundTint="@color/colorPrimary"
+            app:srcCompat="@drawable/human_handsup" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabJumpLeftBoo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/photoPreviewMain"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_toLeftOf="@id/photoPreviewMain"
+            android:tint="@color/white"
+
+            app:backgroundTint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_thumb_down_white_48dp" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabJumpRightBoo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/photoPreviewMain"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_toRightOf="@id/photoPreviewMain"
+            android:rotationY="180"
+            android:tint="@color/white"
+            app:backgroundTint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_thumb_down_white_48dp" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="bottom|center"
+            android:layout_margin="@dimen/fab_margin"
+            android:tint="@color/white"
+            app:srcCompat="@drawable/arrow_expand_all" />
+
+    </RelativeLayout>
 </RelativeLayout>

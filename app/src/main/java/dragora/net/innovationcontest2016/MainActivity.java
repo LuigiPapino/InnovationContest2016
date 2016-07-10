@@ -2,6 +2,7 @@ package dragora.net.innovationcontest2016;
 
 import android.*;
 import android.Manifest;
+import android.animation.Animator;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -16,13 +17,22 @@ import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.EditTextPreference;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -31,6 +41,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.Resource;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapResource;
+import com.bumptech.glide.load.resource.bitmap.ImageVideoBitmapDecoder;
 import com.canelmas.let.AskPermission;
 import com.canelmas.let.DeniedPermission;
 import com.canelmas.let.Let;
@@ -63,10 +74,17 @@ public class MainActivity extends AppCompatActivity implements RuntimePermission
     private static final String TAG = MainActivity.class.getSimpleName();
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("test");
     HashMap<String, String> obj = new HashMap<String, String>();
+    FloatingActionButton fabJumpRight, fabJumpRightBoo;
+    FloatingActionButton fabJumpLeft, fabJumpLeftBoo;
+    FloatingActionButton fab;
+    View colorLayout, photoLayout, shapeLayout, mainLayout;
     private String imgUrl = "https://scontent.xx.fbcdn.net/v/t1.0-9/10431668_10205233708436551_1811721222502137069_n.jpg?oh=c09b432dbf2bc99cf0019ea575539e42&oe=5835234F";
     private String circleImgUrl = imgUrl;
-    private ProgressDialog progressDialog;
+    ProgressBar progressSpinner;
     private int color;
+    EditText nameInput;
+    ImageView photoPreview, photoPreviewMain;
+    Button joinGuestBook;
 
     private void uploadFile(File file) {
         byte[] bytes = null;
@@ -100,8 +118,21 @@ public class MainActivity extends AppCompatActivity implements RuntimePermission
                         circleImgUrl = downloadUrl.toString();
                         obj.put("texture",
                                 circleImgUrl);
-                        progressDialog.dismiss();
-                        progressDialog = null;
+                        setProgressStatus(false);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Glide.with(MainActivity.this)
+                                        .load(circleImgUrl)
+                                        .into(photoPreview);
+                                Glide.with(MainActivity.this)
+                                        .load(circleImgUrl)
+                                        .into(photoPreviewMain);
+                                joinGuestBook.setVisibility(View.VISIBLE);
+                            }
+                        });
+
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -109,79 +140,181 @@ public class MainActivity extends AppCompatActivity implements RuntimePermission
                     public void onFailure(@NonNull Exception exception) {
 
                         Log.d(TAG, "onFailure() called with: exception = [" + exception + "]");
-                        progressDialog.dismiss();
-                        progressDialog = null;
+                        setProgressStatus(false);
                     }
                 });
 
     }
 
+    private void reveal(final View revealView, final View hideView) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                // previously invisible view
+                View myView = revealView;
+                int cx = myView.getWidth() / 2;
+                int cy = myView.getHeight() / 2;
+                float finalRadius = (float) Math.hypot(cx, cy);
+                Animator anim =
+                        ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
+                myView.setVisibility(View.VISIBLE);
+                anim.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animator) {
+                        hideView.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animator) {
+
+                    }
+                });
+                anim.setDuration(600);
+                anim.start();
+
+            }
+        });
+    }
+
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //obj.put("kid", "fighino224");
+
         obj.put("texture",
                 circleImgUrl);
         obj.put("shape", "circle");
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 obj.put("date", "" + new Date().getTime() / 1000);
                 obj.remove("action");
+                String kid = nameInput.getText().toString();
+                if (!TextUtils.isEmpty(kid)) {
+                    obj.put("kid", kid);
+                } else {
+                    obj.remove("kid");
+                }
+                obj.put("color", Integer.toHexString(color).toUpperCase().substring(2));
                 ref.push().setValue(obj);
 
 
             }
         });
 
-        FloatingActionButton fabJumpLeft = (FloatingActionButton) findViewById(R.id.fabJumpLeft);
+        fabJumpLeft = (FloatingActionButton) findViewById(R.id.fabJumpLeft);
         fabJumpLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 obj.put("date", "" + new Date().getTime() / 1000);
                 obj.put("action", "ljump");
+                String kid = nameInput.getText().toString();
+                if (!TextUtils.isEmpty(kid)) {
+                    obj.put("kid", kid);
+                } else {
+                    obj.remove("kid");
+                }
+                obj.put("color", "#00AA00");
                 ref.push().setValue(obj);
             }
         });
-        FloatingActionButton fabJumpRight = (FloatingActionButton) findViewById(R.id.fabJumpRight);
+        fabJumpLeftBoo = (FloatingActionButton) findViewById(R.id.fabJumpLeftBoo);
+        fabJumpLeftBoo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                obj.put("date", "" + new Date().getTime() / 1000);
+                obj.put("action", "ljump");
+                String kid = nameInput.getText().toString();
+                if (!TextUtils.isEmpty(kid)) {
+                    obj.put("kid", kid);
+                } else {
+                    obj.remove("kid");
+                }
+                obj.put("color", "#AA0000");
+                ref.push().setValue(obj);
+            }
+        });
+        fabJumpRight = (FloatingActionButton) findViewById(R.id.fabJumpRight);
         fabJumpRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 obj.put("date", "" + new Date().getTime() / 1000);
                 obj.put("action", "rjump");
+                String kid = nameInput.getText().toString();
+                if (!TextUtils.isEmpty(kid)) {
+                    obj.put("kid", kid);
+                } else {
+                    obj.remove("kid");
+                }
+                obj.put("color", "#00AA00");
+
                 ref.push().setValue(obj);
             }
         });
+        fabJumpRightBoo = (FloatingActionButton) findViewById(R.id.fabJumpRightBoo);
+        fabJumpRightBoo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                obj.put("date", "" + new Date().getTime() / 1000);
+                obj.put("action", "rjump");
+                String kid = nameInput.getText().toString();
+                if (!TextUtils.isEmpty(kid)) {
+                    obj.put("kid", kid);
+                } else {
+                    obj.remove("kid");
+                }
+                obj.put("color", "#AA0000");
+                ref.push().setValue(obj);
+            }
+        });
+
+        nameInput = (EditText) findViewById(R.id.nameInput);
+        colorLayout = findViewById(R.id.colorLayout);
+        photoLayout = findViewById(R.id.photoLayout);
+        shapeLayout = findViewById(R.id.shapeLayout);
+        mainLayout = findViewById(R.id.mainLayout);
+        progressSpinner = (ProgressBar) findViewById(R.id.progress_spinner);
+        photoPreview = (ImageView) findViewById(R.id.photoPreview);
+        photoPreviewMain = (ImageView) findViewById(R.id.photoPreviewMain);
+        joinGuestBook = (Button)findViewById(R.id.joinGuestbook);
+        int rand = (int) (Math.random() * 1000000d);
+        nameInput.setText("Guest " + rand);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    public void onJoinClick(View v){
+        fab.callOnClick();
+        reveal(mainLayout, shapeLayout);
     }
+    private void setProgressStatus(final boolean isVisible) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                progressSpinner.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+            }
+        });
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public void onShapeClick(View view) {
@@ -206,10 +339,8 @@ public class MainActivity extends AppCompatActivity implements RuntimePermission
                         if (positiveResult) {
                             obj.put("color", Integer.toHexString(color).toUpperCase().substring(2));
                             MainActivity.this.color = color;
-                            v.setBackgroundColor(color);
-                            Toast.makeText(getContext(),
-                                    "Color selected: #" + Integer.toHexString(color).toUpperCase(),
-                                    Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "pick() " + color);
+                            reveal(photoLayout, colorLayout);
                         } else {
 
                         }
@@ -275,8 +406,8 @@ public class MainActivity extends AppCompatActivity implements RuntimePermission
                     @Override
                     protected void onPreExecute() {
                         super.onPreExecute();
-                        progressDialog = new ProgressDialog(MainActivity.this);
-                        progressDialog.show();
+                        setProgressStatus(true);
+                        reveal(shapeLayout, photoLayout);
                     }
 
                     @Override
@@ -355,7 +486,7 @@ public class MainActivity extends AppCompatActivity implements RuntimePermission
             border.setStyle(Paint.Style.STROKE);
             border.setStrokeWidth((float) borderSizePx);
             border.setAntiAlias(true);
-
+            Log.d(TAG, "transform() " + color);
             canvas.drawCircle(r + borderSizePx, r + borderSizePx, r + (borderSizePx / 2), border);
 
             return BitmapResource.obtain(bitmap, mBitmapPool);
