@@ -16,7 +16,7 @@ android {
   buildToolsVersion "24.0.0"
   defaultConfig {
     applicationId "dragora.net.innovationcontest2016"
-    minSdkVersion 22
+    minSdkVersion 21
     targetSdkVersion 23
     versionCode 1
     versionName "1.0"
